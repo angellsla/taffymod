@@ -1,0 +1,13 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="MIT"
+
+[[mods]]
+modId="taffymod"
+version="1.0.0"
+displayName="Taffy Popup Mod"
+authors="Taffy"
+description='''
+Taffy Popup Mod - 局域网联机整活模组
+在服务端执行命令让指定玩家弹出窗口显示自定义文本
+'''
