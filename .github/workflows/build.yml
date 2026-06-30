@@ -35,14 +35,19 @@ jobs:
           name: taffymod-jar
           path: build/libs/*.jar
 
+      - name: Get version from build.gradle
+        id: get_version
+        run: |
+          VERSION=$(grep "^version" build.gradle | sed "s/.*= *'\(.*\)'/\1/")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
       - name: Create Release
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v1.0.0
-          name: Taffy Popup Mod v1.0.0
-          body: |
-            NeoForge 1.21.1 局域网联机整活弹窗模组
+          tag_name: v${{ steps.get_version.outputs.version }}
+          name: Taffy Popup Mod v${{ steps.get_version.outputs.version }}
+          body_path: CHANGELOG.md
           files: build/libs/*.jar
           fail_on_unmatched_files: true
         env:
