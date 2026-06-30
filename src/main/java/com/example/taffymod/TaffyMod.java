@@ -10,44 +10,17 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
-import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-import javax.swing.*;
-import java.awt.*;
 import java.util.Collection;
 
 @Mod("taffymod")
 public class TaffyMod {
 
     public TaffyMod(IEventBus modEventBus) {
-        modEventBus.addListener(this::commonSetup);
-        modEventBus.addListener(this::registerPayloads);
         NeoForge.EVENT_BUS.addListener(this::onRegisterCommands);
-    }
-
-    private void commonSetup(FMLCommonSetupEvent event) {
-    }
-
-    private void registerPayloads(RegisterPayloadHandlersEvent event) {
-        event.registrar("taffymod")
-                .playToClient(TaffyPopupPayload.TYPE, TaffyPopupPayload.STREAM_CODEC, this::handlePopup);
-    }
-
-    private void handlePopup(TaffyPopupPayload payload, IPayloadContext context) {
-        SwingUtilities.invokeLater(() -> {
-            try {
-                UIManager.put("OptionPane.messageFont", new Font("Microsoft YaHei", Font.PLAIN, 18));
-                JOptionPane.showMessageDialog(null, payload.message());
-            } catch (Exception e) {
-                UIManager.put("OptionPane.messageFont", new Font("SimSun", Font.PLAIN, 18));
-                JOptionPane.showMessageDialog(null, payload.message());
-            }
-        });
     }
 
     private void onRegisterCommands(RegisterCommandsEvent event) {
